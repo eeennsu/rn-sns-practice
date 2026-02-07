@@ -19,6 +19,6 @@ function filterUserListResponse(data: any): IUser[] {
     id: user.login.uuid,
     name: `${user.name.first} ${user.name.last}`,
     image: user.picture.thumbnail,
-    status: user.login?.md5 && user.login?.uuid,
+    status: Math.random() > 0.5 ? 'online' : 'offline',
   }));
 }

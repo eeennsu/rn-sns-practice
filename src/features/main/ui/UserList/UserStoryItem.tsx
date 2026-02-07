@@ -1,5 +1,5 @@
 import { IUser } from '@entities/user/types';
-import type { FC } from 'react';
+import { memo, type FC } from 'react';
 
 import { Image, Text, View } from 'react-native';
 import { userStoryStyle } from './styles';
@@ -31,4 +31,4 @@ const UserStoryItem: FC<IProps> = ({ user }) => {
   );
 };
 
-export default UserStoryItem;
+export default memo(UserStoryItem);
