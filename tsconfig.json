@@ -1,8 +1,56 @@
 {
-  "extends": "@react-native/typescript-config",
   "compilerOptions": {
-    "types": ["jest"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "dom.iterable", "ESNext"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "incremental": true,
+    "noUnusedLocals": true,
+    "baseUrl": ".",
+    "paths": {
+      "@navigators/*": ["src/navigators/*"],
+      "@screens/*": ["src/screens/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"],
+      "@utils/*": ["src/shared/utils/*"],
+      "@stores/*": ["src/shared/stores/*"],
+      "@hooks/*": ["src/shared/hooks/*"],
+      "@typings/*": ["src/shared/typings/*"],
+      "@consts/*": ["src/shared/consts/*"],
+      "@components/*": ["src/shared/components/*"],
+      "@styles/*": ["src/shared/styles/*"],
+      "@contracts": ["src/shared/contracts/index.ts"],
+      "@theme": ["src/shared/styles/theme.ts"],
+      "@locale": ["src/shared/locales/index.ts"],
+      "@config": ["config/config.json"],
+      "@package": ["./package.json"],
+      "@assets": ["./assets/*"],
+      "@src/*": ["src/*"]
+    },
+    "moduleSuffixes": [".ios", ".android", ".native", ""],
+    "plugins": [
+      {
+        "name": "@styled/typescript-styled-plugin",
+        "lint": {
+          "validProperties": ["tint-color"]
+        }
+      }
+    ]
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "src/@types"],
   "exclude": ["**/node_modules", "**/Pods"]
 }
