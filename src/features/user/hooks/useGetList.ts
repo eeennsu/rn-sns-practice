@@ -1,28 +1,23 @@
-import { USER_KEYS } from '@entities/user/consts';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import apiGetUsers from '../apis/getUsers';
-import { IUser } from '@entities/user/types';
 import { useMemo } from 'react';
+
+import { USER_KEYS } from '@entities/user/consts';
+import { IUser } from '@entities/user/types';
+
 import { PAGE_SIZE } from '@consts/commons';
+
+import apiGetUsers from '../apis/getStoryList';
 
 interface IReturn {
   data?: IUser[];
   isLoading: boolean;
-  isFetching: boolean;
   fetchNextPage: () => void;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
 }
 
-const useGetUserList = (): IReturn => {
-  const {
-    data,
-    isLoading,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
+const useGetUserStoryList = (): IReturn => {
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: [USER_KEYS.GET_LIST],
     queryFn: ({ pageParam = 1 }) =>
       apiGetUsers({ page: pageParam.toString(), pageSize: PAGE_SIZE.USERS }),
@@ -38,11 +33,10 @@ const useGetUserList = (): IReturn => {
   return {
     data: userListData,
     isLoading,
-    isFetching,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   };
 };
 
-export default useGetUserList;
+export default useGetUserStoryList;

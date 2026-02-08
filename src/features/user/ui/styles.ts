@@ -1,5 +1,6 @@
-import { getFontFamily } from '@src/shared/libs/font';
 import { StyleSheet } from 'react-native';
+
+import { getFontFamily } from '@src/shared/libs/font';
 
 export const style = StyleSheet.create({
   title: {
@@ -8,4 +9,3 @@ export const style = StyleSheet.create({
     fontSize: 24,
   },
 });
-

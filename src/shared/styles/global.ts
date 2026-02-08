@@ -42,11 +42,9 @@ export const headerStyle = StyleSheet.create({
   },
 });
 
-export const userListStyle = StyleSheet.create({
-  wrapper: {
-    flexDirection: 'row',
-    gap: 36,
-    paddingTop: 20,
-    paddingInline: 34,
+export const skeletonItemStyle = StyleSheet.create({
+  item: {
+    backgroundColor: '#f0f2f4ff',
+    borderRadius: 20,
   },
 });

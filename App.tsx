@@ -1,3 +1,7 @@
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { QueryClientProvider } from '@tanstack/react-query';
+import axios from 'axios';
 import {
   StatusBar,
   Text,
@@ -5,16 +9,15 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { globalStyle, headerStyle } from '@styles/global';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import Title from './src/features/main/ui/Title';
-import UserList from '@features/main/ui/UserList/UserList';
-import axios from 'axios';
-import { QueryClientProvider } from '@tanstack/react-query';
+
+import MainTitle from '@features/user/ui/MainTitle';
+import PostList from '@features/user/ui/PostList/PostList';
+import UserStoryList from '@features/user/ui/UserStoryList/UserStoryList';
+
 import utilQueryClient from '@utils/util_query_client';
+
+import { globalStyle, headerStyle } from '@styles/global';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -36,7 +39,7 @@ function InApp() {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <SafeAreaView style={globalStyle.safeArea}>
         <View style={headerStyle.wrapper}>
-          <Title title="Let's Explore" />
+          <MainTitle title="Let's Explore" />
           <TouchableOpacity style={headerStyle.messageIcon}>
             <FontAwesomeIcon icon={faEnvelope} color="#898DAE" />
             <View style={headerStyle.messageCountContainer}>
@@ -44,7 +47,8 @@ function InApp() {
             </View>
           </TouchableOpacity>
         </View>
-        <UserList />
+        <UserStoryList />
+        <PostList />
       </SafeAreaView>
     </SafeAreaProvider>
   );
