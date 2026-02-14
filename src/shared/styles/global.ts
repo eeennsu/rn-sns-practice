@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export const globalStyle = StyleSheet.create({
   safeArea: {
@@ -35,8 +35,12 @@ export const headerStyle = StyleSheet.create({
     color: 'white',
     flexDirection: 'row',
   },
+  messageCountWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   messageCount: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
     color: 'white',
   },
@@ -46,5 +50,16 @@ export const skeletonItemStyle = StyleSheet.create({
   item: {
     backgroundColor: '#f0f2f4ff',
     borderRadius: 20,
+  },
+});
+
+export const testStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    ...Platform.select({
+      ios: { backgroundColor: 'red' },
+      android: { backgroundColor: 'blue' },
+      default: { backgroundColor: 'green' }, // for other platforms like web
+    }),
   },
 });

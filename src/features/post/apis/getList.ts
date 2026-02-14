@@ -5,6 +5,7 @@ import { IPost } from '@entities/post/types';
 import { UserStatus } from '@entities/user/types';
 
 import { IPageParams } from '@typings/common';
+import { UtilImageCache } from '@utils/util_image';
 
 interface IParams extends IPageParams {}
 
@@ -44,6 +45,7 @@ function filterPostListResponse(posts: any[], users: any[]): IPost[] {
         location: authorData.address?.city || 'Unknown',
       },
       image: `https://picsum.photos/seed/${post.id}/600/400`,
+      description: post.body,
       likeCount: post.reactions?.likes || 0,
       commentCount: Math.floor(Math.random() * 50),
       sharedCount: Math.floor(Math.random() * 10),
@@ -51,6 +53,14 @@ function filterPostListResponse(posts: any[], users: any[]): IPost[] {
       title: post.title,
     };
   });
+
+  // 3개 아이탬의 이미지만 preload
+  UtilImageCache.preloadImages(
+    mappedPosts
+      .slice(0, 3)
+      .filter(post => !!post.image)
+      .map(post => post.image),
+  );
 
   return mappedPosts.sort((a, b) =>
     dayjs(b.createdAt).isAfter(dayjs(a.createdAt)) ? 1 : -1,

@@ -17,16 +17,17 @@ interface IReturn {
 }
 
 const useGetUserStoryList = (): IReturn => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [USER_KEYS.GET_LIST],
-    queryFn: ({ pageParam = 1 }) =>
-      apiGetUsers({ page: pageParam.toString(), pageSize: PAGE_SIZE.USERS }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1;
-      return lastPage.length === 0 ? undefined : nextPage;
-    },
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [USER_KEYS.GET_LIST],
+      queryFn: ({ pageParam = 1 }) =>
+        apiGetUsers({ page: pageParam.toString(), pageSize: PAGE_SIZE.USERS }),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1;
+        return lastPage.length === 0 ? undefined : nextPage;
+      },
+    });
 
   const userListData = useMemo(() => data?.pages?.flat() || [], [data]);
 

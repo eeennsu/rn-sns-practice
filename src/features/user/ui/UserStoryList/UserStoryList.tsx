@@ -1,11 +1,5 @@
 import { useCallback, useMemo, type FC } from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  ListRenderItem,
-  Text,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 
 import useGetUserList from '@features/user/hooks/useGetList';
 
@@ -17,6 +11,8 @@ import { skeletonItemStyle } from '@styles/global';
 
 import UserStoryItem from './UserStoryItem';
 
+import CommonFlashList from '@components/commons/FlashList';
+import { ListRenderItemInfo } from '@shopify/flash-list';
 import { loadingStyle, noMoreUsersStyle, userStoryListStyle } from './styles';
 
 const UserStoryList: FC = () => {
@@ -27,10 +23,10 @@ const UserStoryList: FC = () => {
     if (hasNextPage) fetchNextPage();
   }, [hasNextPage, fetchNextPage]);
 
-  const keyExtractor = useCallback((item: IUser) => item.id, []);
-
-  const renderItem = useCallback<ListRenderItem<IUser>>(
-    ({ item: user }) => <UserStoryItem user={user} />,
+  const renderItem = useCallback(
+    ({ item: user }: ListRenderItemInfo<IUser>) => (
+      <UserStoryItem user={user} />
+    ),
     [],
   );
 
@@ -65,18 +61,14 @@ const UserStoryList: FC = () => {
   }
 
   return (
-    <FlatList
+    <CommonFlashList
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={userStoryListStyle.wrapper}
       data={data || []}
       ListFooterComponent={ListFooterComponent}
       renderItem={renderItem}
-      keyExtractor={keyExtractor}
       onEndReached={onEndReached}
-      onEndReachedThreshold={0.8}
-      windowSize={PAGE_SIZE.USERS - 2}
-      initialNumToRender={PAGE_SIZE.USERS}
     />
   );
 };

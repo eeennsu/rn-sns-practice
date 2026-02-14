@@ -1,23 +1,16 @@
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { QueryClientProvider } from '@tanstack/react-query';
 import axios from 'axios';
+import { StatusBar, useColorScheme, View } from 'react-native';
 import {
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
-import MainTitle from '@features/user/ui/MainTitle';
-import PostList from '@features/user/ui/PostList/PostList';
-import UserStoryList from '@features/user/ui/UserStoryList/UserStoryList';
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { TamaguiProvider } from 'tamagui';
 
 import utilQueryClient from '@utils/util_query_client';
 
-import { globalStyle, headerStyle } from '@styles/global';
+import { globalStyle } from '@styles/global';
+import RootStaticNavigation from '@navigators/Root';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -25,32 +18,39 @@ const queryClient = utilQueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <InApp />
-    </QueryClientProvider>
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <TamaguiProvider>
+          <PortalProvider>
+            <InApp />
+          </PortalProvider>
+        </TamaguiProvider>
+      </QueryClientProvider>
+    </SafeAreaProvider>
   );
 }
 
 function InApp() {
   const isDarkMode = useColorScheme() === 'dark';
+  const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaProvider>
+    <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <SafeAreaView style={globalStyle.safeArea}>
-        <View style={headerStyle.wrapper}>
-          <MainTitle title="Let's Explore" />
-          <TouchableOpacity style={headerStyle.messageIcon}>
-            <FontAwesomeIcon icon={faEnvelope} color="#898DAE" />
-            <View style={headerStyle.messageCountContainer}>
-              <Text style={headerStyle.messageCount}>42</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <UserStoryList />
-        <PostList />
-      </SafeAreaView>
-    </SafeAreaProvider>
+      <View
+        style={[
+          globalStyle.safeArea,
+          {
+            paddingTop: insets.top,
+            paddingBottom: insets.bottom,
+            paddingLeft: insets.left,
+            paddingRight: insets.right,
+          },
+        ]}
+      >
+        <RootStaticNavigation />
+      </View>
+    </>
   );
 }
 
